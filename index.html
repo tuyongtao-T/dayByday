@@ -1,9 +1,104 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
 	</head>
+
 	<body>
+		<div id="jsContent" style="width: 200px; height: 300px; background: aqua;">
+			<h1>1</h1>
+			<h2>2</h2>
+			<h4>4</h4>
+		</div>
+		<div id="jsMenu">
+
+		</div>
+		<script type="text/javascript">
+			//			function elemChild(node) {
+			//				var obj = {
+			//						'length': 0,
+			//						'push': Array.prototype.push,
+			//						'splice': Array.prototype.splice
+			//					},
+			//					children = node.childNodes;
+			//				for(var i = 0; i < children.length; i++) {
+			//					if(children[i].nodeType === 1) {
+			//						//			obj[obj.length] = children[i];
+			//						//	obj.length++;
+			//						obj.push(children[i]);
+			//					}
+			//				}
+			//				return obj;
+			//
+			//			}
+			//			var div = document.getElementsByTagName('div')[0];
+			//			console.log(elemChild(div).length);
+			//			console.log(div.childNodes.length)
+
+			//			var nodeA = document.getElementById("jsContent"),
+			//				nodeB = document.getElementById("jsMenu"),
+			//				nodeNames = [],
+			//				arr = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+			//				childrenA = [],
+			//				newary = [];
+			//
+			//			var childrenA = nodeA.childNodes; //子节点集合
+			//			/*访问子节点name，存在一个新数组*/
+			//			for(var i = 0; i < childrenA.length; i++) {
+			//				nodeNames[i] = childrenA[i].nodeName.toLowerCase();
+			//				for(var j = 0; j < arr.length; j++) {
+			//					if(nodeNames[i] === arr[j]) {
+			//						newary.push(childrenA[i]);
+			//					}
+			//				}
+			//			}
+
+			;
+			(function() {
+
+				Node.prototype.insertAfter = function(newElement, prevElement) {
+					if(prevElement.nextElementSibling) {
+						this.insertBefore(newElement, prevElement.nextElementSibling);
+
+					} else {
+						this.appendChild(newElement);
+					}
+				}
+			})();
+
+			var oDiv = document.getElementsByTagName("div")[0],
+				oH4 = document.getElementsByTagName('h4')[0],
+				oa = document.createElement("a");
+			oDiv.insertAfter(oa, oH4);
+
+			;
+			(function() {
+				Node.prototype.getStyles = function() {
+					var obj = {};
+					for(var i = 0; i < arguments.length; i++) {
+						if(window.getComputedStyle) {
+							if(arguments[i]) {
+								obj[arguments[i]] = window.getComputedStyle(this, null)[arguments[i]];
+							} else {
+								obj.arguments[i] = window.getComputedStyle(this, null);
+							}
+						} else {
+							if(arguments[i]) {
+								obj[arguments[i]] = elem.currentStyle[arguments[i]];
+							} else {
+								obj[arguments[i]] = elem.currentStyle;
+							}
+						}
+					}
+					return obj;
+				}
+			})();
+			
+			
+			
+		</script>
 	</body>
+
 </html>
