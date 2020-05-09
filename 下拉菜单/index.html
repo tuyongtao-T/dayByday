@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>下拉菜单</title>
+		<style type="text/css">
+			a {
+				text-decoration: none;
+			}
+			
+			ul {
+				padding: 0;
+				margin: 0;
+				list-style-type: none;
+			}
+			
+			.dropdown {
+				position: relative;
+				width: 200px;
+				height: 50px;
+				background-color: #000;
+			}
+			
+			.dropdown::after {
+				content: '下';
+				display: table;
+				display: block;
+				position: absolute;
+				top: 15px;
+				right: 15px;
+				width: 25px;
+				height: 25px;
+				color: white;
+			}
+			
+			.dropdown.up::after {
+				content: '上';
+			}
+			/*.dropdown .list { 没有动画的代码
+				display: none;
+			}*/
+			
+			.dropdown .list {
+				height: 0;
+				overflow: hidden;
+			}
+			/*.dropdown:hover .list {
+				display: block;
+			}*/
+			
+			.dropdown a {
+				display: block;
+			}
+			
+			.dropdown .main {
+				display: block;
+				height: 100%;
+				text-align: center;
+				line-height: 50px;
+				color: white;
+			}
+			
+			.dropdown .main {
+				display: block;
+				height: 100%;
+				text-align: center;
+				line-height: 50px;
+				color: white;
+			}
+			
+			.dropdown .item {
+				height: 40px;
+				background-color: #333;
+			}
+			
+			.dropdown .item:hover {
+				background-color: #000;
+			}
+			
+			.dropdown .item a {
+				height: 100%;
+				color: #999;
+				text-align: center;
+				line-height: 40px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="dropdown">
+			<a href="javascript:;" class="main">下拉菜单</a>
+			<ul class="list">
+				<li class="item">
+					<a href="">项目一</a>
+				</li>
+				<li class="item">
+					<a href="">项目二</a>
+				</li>
+				<li class="item">
+					<a href="">项目三</a>
+				</li>
+				<li class="item">
+					<a href="">项目四</a>
+				</li>
+				<li class="item">
+					<a href="">项目五</a>
+				</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			var dropdown = document.getElementsByTagName('div')[0];
+			oList = elemChild(dropdown)[1],
+				timer = null,
+				listHeight = 0,
+				speed = 3;
+			//			没有动画的代码
+			//			dropdown.onmouseenter = function() {
+			//					oList.style.display = 'block';
+			//					this.className += ' up';//这里注意有空格
+			//			}
+			//			dropdown.onmouseleave = function() {
+			//					oList.style.display = 'none';
+			//					this.className = 'dropdown';
+			//			}
+			
+			/*有动画的代码*/
+			dropdown.onmouseenter = function() {
+				clearInterval(timer);
+				timer = setInterval(function(){
+						if (listHeight >= 200) {
+							clearInterval(timer);
+						}
+						listHeight = parseInt(oList.getStyles('height').height) + speed;
+						oList.style.height = listHeight + 'px';
+				}, 1);
+				this.className += ' up'; //这里注意有空格
+			}
+			dropdown.onmouseleave = function() {
+				clearInterval(timer);
+				timer = setInterval(function(){
+						if (listHeight <= 0) {
+							clearInterval(timer);
+						}
+						listHeight = parseInt(oList.getStyles('height').height) - speed;
+						oList.style.height = listHeight + 'px';
+				}, 1);
+				this.className = 'dropdown'; //这里注意有空格
+			}
+			
+			/*获取子元素*/
+			function elemChild(node) {
+				var obj = {
+						'length': 0,
+						'push': Array.prototype.push,
+						'splice': Array.prototype.splice
+					},
+					children = node.childNodes;
+				for(var i = 0; i < children.length; i++) {
+					if(children[i].nodeType === 1) {
+						//			obj[obj.length] = children[i];
+						//			obj.length++;
+						obj.push(children[i]);
+					}
+				}
+				return obj;
+			}
+
+			/*获取元素样式*/
+			;
+			(function() {
+				Node.prototype.getStyles = function() {
+					var obj = {};
+					for(var i = 0; i < arguments.length; i++) {
+						if(window.getComputedStyle) {
+							if(arguments[i]) {
+								obj[arguments[i]] = window.getComputedStyle(this, null)[arguments[i]]; //这里的null是填伪元素，获取伪元素的样式（after）
+							} else {
+								obj.arguments[i] = window.getComputedStyle(this, null);
+							}
+						} else {
+							if(arguments[i]) {
+								obj[arguments[i]] = elem.currentStyle[arguments[i]];
+							} else {
+								obj[arguments[i]] = elem.currentStyle;
+							}
+						}
+					}
+					return obj;
+				}
+			})();
+		</script>
+	</body>
+
+</html>

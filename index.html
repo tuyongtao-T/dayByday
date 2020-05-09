@@ -4,16 +4,41 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
+		<style type="text/css">
+			div {
+				width: 200px;
+				height: 300px;
+				background: pink;
+			}
+			.red {
+				background: red;
+			}
+			h2 {
+				display: block;
+				width: 40px;
+				height: 40px;
+				background: red;
+			}
+			h1 {
+				display: block;
+				width: 80px;
+				height: 80px;
+				background: green;
+			}
+			h4 {
+				display: block;
+				width: 150px;
+				height: 150px;
+				background:black;
+			}
+		</style>
 	</head>
 
 	<body>
-		<div id="jsContent" style="width: 200px; height: 300px; background: aqua;">
-			<h1>1</h1>
-			<h2>2</h2>
-			<h4>4</h4>
-		</div>
-		<div id="jsMenu">
-
+		<div id="div">
+			<h1 class="tyt">
+				<h2></h2>
+			</h1>
 		</div>
 		<script type="text/javascript">
 			//			function elemChild(node) {
@@ -55,46 +80,133 @@
 			//				}
 			//			}
 
-			;
-			(function() {
+//			;
+//			(function() {
+//
+//				Node.prototype.insertAfter = function(newElement, prevElement) {
+//					if(prevElement.nextElementSibling) {
+//						this.insertBefore(newElement, prevElement.nextElementSibling);
+//
+//					} else {
+//						this.appendChild(newElement);
+//					}
+//				}
+//			})();
 
-				Node.prototype.insertAfter = function(newElement, prevElement) {
-					if(prevElement.nextElementSibling) {
-						this.insertBefore(newElement, prevElement.nextElementSibling);
 
-					} else {
-						this.appendChild(newElement);
-					}
+
+			//			var obj = {
+			//				width: '200px',
+			//				height: '200px'
+			//			};
+			//			for(var key in obj){
+			//				console.log(obj[key]);
+			//			}
+
+			//			oDiv.setStyles({
+			//				width: '600px',
+			//				height: '400px',
+			//				background: 'pink',
+			//				opacity: '.7'
+			//			});
+
+			//			function getElem(str) {
+			//				var strArr = str.split(/\s+/),
+			//					len = strArr.length;
+			//				function test(str) {
+			//					var firstStr = str.charAt(0),
+			//						otherStr= str.slice(1);
+			//					switch(firstStr) {
+			//						case '#':
+			//							var obj =document.getElementById(otherStr);
+			//							return obj;
+			//							break;
+			//						case '.':
+			//							var obj = document.getElementsByClassName(otherStr);
+			//							return obj;
+			//							break;
+			//						default:
+			//							var obj = document.getElementsByTagName(str);
+			//							return obj;
+			//					}
+			//				}
+			//
+			//				if(len === 1) {
+			//					test(strArr[0]);
+			//				} else if(len === 2) {
+			//					test(strArr[0]).test(strArr[1]);
+			//				} else if(len === 3) {
+			//					test(strArr[0]).test(strArr[1]).test(strArr[2]);
+			//				} else {
+			//					return console.log('输入不能超过3级');
+			//				}
+			//
+			//			}
+			function getElem(str) {
+				var firstStr = str.charAt(0),
+					otherStr = str.slice(1);
+				switch(firstStr) {
+					case '#':
+						var obj = document.getElementById(otherStr);
+						return obj;
+						break;
+					case '.':
+						var obj = document.getElementsByClassName(otherStr);
+						return obj;
+						break;
+					default:
+						var obj = document.getElementsByTagName(str);
+						return obj;
 				}
-			})();
-
-			var oDiv = document.getElementsByTagName("div")[0],
-				oH4 = document.getElementsByTagName('h4')[0],
-				oa = document.createElement("a");
-			oDiv.insertAfter(oa, oH4);
-
-			;
-			(function() {
-				Node.prototype.getStyles = function() {
-					var obj = {};
-					for(var i = 0; i < arguments.length; i++) {
-						if(window.getComputedStyle) {
-							if(arguments[i]) {
-								obj[arguments[i]] = window.getComputedStyle(this, null)[arguments[i]];
-							} else {
-								obj.arguments[i] = window.getComputedStyle(this, null);
-							}
-						} else {
-							if(arguments[i]) {
-								obj[arguments[i]] = elem.currentStyle[arguments[i]];
-							} else {
-								obj[arguments[i]] = elem.currentStyle;
-							}
-						}
-					}
-					return obj;
+			}
+//			var div = getElem('#div');
+			//			;(function() {
+			//				Node.prototype.getElem = function(str) {
+			//					var firstStr = str.charAt(0),
+			//						otherStr = str.slice(1);
+			//
+			//					switch(firstStr) {
+			//						case '#':
+			//							return document.getElementsByClassName(otherStr);
+			//							break;
+			//						case '.':
+			//							return document.getElementById(otherStr);
+			//							break;
+			//						default:
+			//							return document.getElementsByTagName(str);
+			//					}
+			//
+			//				}
+			//			})();
+			function addEvent(elem, type, fn) {
+				if(elem.addEventListener) {
+					elem.addEventListener(type, fn, false)
+				} else if(elem.attacthEvent) {
+					elem.attachEvent('on' + type, function() {
+						fn.call(elem);
+					})
+				} else {
+					elem['on' + type] = fn;
 				}
-			})();
+			}
+			var oH1 = getElem('h1')[0],
+				oH2 = getElem('h2')[0],
+				oDiv = getElem('#div');
+			addEvent(oDiv,'click',function(){
+				console.log('1')
+			})
+			addEvent(oH1,'click',function(e){
+				var e = e || window.event;
+				/*e.stopPropagation();*/
+				e.cancelBubble = true;
+				console.log('2')
+			})
+			addEvent(oH2,'click',function(){
+				console.log('3')
+			})
+			
+			
+			
 			
 			
 			
