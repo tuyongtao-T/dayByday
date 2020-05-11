@@ -5,40 +5,54 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<style type="text/css">
-			div {
-				width: 200px;
+			* {
+				margin: 0;
+			}
+			
+			#div {
+				margin: 50px;
+				width: 300px;
 				height: 300px;
 				background: pink;
 			}
-			.red {
+			/*.red {
 				background: red;
 			}
+			
 			h2 {
 				display: block;
 				width: 40px;
 				height: 40px;
 				background: red;
 			}
+			
 			h1 {
 				display: block;
 				width: 80px;
 				height: 80px;
 				background: green;
 			}
+			
 			h4 {
 				display: block;
 				width: 150px;
 				height: 150px;
-				background:black;
-			}
+				background: black;
+			}*/
 		</style>
 	</head>
 
 	<body>
 		<div id="div">
-			<h1 class="tyt">
-				<h2></h2>
-			</h1>
+			<div style="height: 100px;background: red;">
+
+			</div>
+			<div style="height: 100px;background: #008000;">
+
+			</div>
+			<div style="height: 100px;background: greenyellow;">
+
+			</div>
 		</div>
 		<script type="text/javascript">
 			//			function elemChild(node) {
@@ -80,20 +94,18 @@
 			//				}
 			//			}
 
-//			;
-//			(function() {
-//
-//				Node.prototype.insertAfter = function(newElement, prevElement) {
-//					if(prevElement.nextElementSibling) {
-//						this.insertBefore(newElement, prevElement.nextElementSibling);
-//
-//					} else {
-//						this.appendChild(newElement);
-//					}
-//				}
-//			})();
-
-
+			//			;
+			//			(function() {
+			//
+			//				Node.prototype.insertAfter = function(newElement, prevElement) {
+			//					if(prevElement.nextElementSibling) {
+			//						this.insertBefore(newElement, prevElement.nextElementSibling);
+			//
+			//					} else {
+			//						this.appendChild(newElement);
+			//					}
+			//				}
+			//			})();
 
 			//			var obj = {
 			//				width: '200px',
@@ -142,24 +154,24 @@
 			//				}
 			//
 			//			}
-			function getElem(str) {
-				var firstStr = str.charAt(0),
-					otherStr = str.slice(1);
-				switch(firstStr) {
-					case '#':
-						var obj = document.getElementById(otherStr);
-						return obj;
-						break;
-					case '.':
-						var obj = document.getElementsByClassName(otherStr);
-						return obj;
-						break;
-					default:
-						var obj = document.getElementsByTagName(str);
-						return obj;
-				}
-			}
-//			var div = getElem('#div');
+			//			function getElem(str) {
+			//				var firstStr = str.charAt(0),
+			//					otherStr = str.slice(1);
+			//				switch(firstStr) {
+			//					case '#':
+			//						var obj = document.getElementById(otherStr);
+			//						return obj;
+			//						break;
+			//					case '.':
+			//						var obj = document.getElementsByClassName(otherStr);
+			//						return obj;
+			//						break;
+			//					default:
+			//						var obj = document.getElementsByTagName(str);
+			//						return obj;
+			//				}
+			//			}
+			//			var div = getElem('#div');
 			//			;(function() {
 			//				Node.prototype.getElem = function(str) {
 			//					var firstStr = str.charAt(0),
@@ -178,38 +190,189 @@
 			//
 			//				}
 			//			})();
-			function addEvent(elem, type, fn) {
-				if(elem.addEventListener) {
-					elem.addEventListener(type, fn, false)
-				} else if(elem.attacthEvent) {
-					elem.attachEvent('on' + type, function() {
-						fn.call(elem);
-					})
+			//			function addEvent(elem, type, fn) {
+			//				if(elem.addEventListener) {
+			//					elem.addEventListener(type, fn, false)
+			//				} else if(elem.attacthEvent) {
+			//					elem.attachEvent('on' + type, function() {
+			//						fn.call(elem);
+			//					})
+			//				} else {
+			//					elem['on' + type] = fn;
+			//				}
+			//			}
+			//			var oH1 = getElem('h1')[0],
+			//				oH2 = getElem('h2')[0],
+			//				oDiv = getElem('#div');
+			//			addEvent(oDiv, 'click', function(e) {
+			//				var e = e || window.event,
+			//					tar = e.target || e.srcElement;
+			//
+			//				console.log(e)
+			//			})
+			//			addEvent(oH1,'click',function(e){
+			//				var e = e || window.event;
+			//				/*e.stopPropagation();*/
+			//				e.cancelBubble = true;
+			//				console.log('2')
+			//			})
+			//			addEvent(oH2,'click',function(){
+			//				console.log('3')
+			//			})
+
+			//			function getScrollOffset() {
+			//				if(window.pageYOffset) {
+			//					console.log(1)
+			//					return {
+			//						left: window.pageXOffset,
+			//						top: window.pageYOffset
+			//					}
+			//				}else if(document.documentElement.scrollLeft){
+			//					console.log(2)
+			//					return {
+			//						left: document.documentElement.scrollLeft,
+			//						top: document.documentElement.scrollToP
+			//					}
+			//				}else{
+			//					console.log(3)
+			//					return {
+			//						left: document.body.scrollLeft,
+			//						top: document.body.scrollTop
+			//					}
+			//				}
+			//			}
+			function getScrollOffset() {
+				if(window.pageXOffset) {
+					return {
+						left: window.pageXOffset,
+						top: window.pageYOffset
+					}
 				} else {
-					elem['on' + type] = fn;
+					return {
+						left: document.body.scrollLeft + document.documentElement.scrollLeft,
+						top: document.body.scrollTop + document.documentElement.scrollTop
+					}
 				}
 			}
-			var oH1 = getElem('h1')[0],
-				oH2 = getElem('h2')[0],
-				oDiv = getElem('#div');
-			addEvent(oDiv,'click',function(){
-				console.log('1')
-			})
-			addEvent(oH1,'click',function(e){
+
+			function getViewportSize() {
+				if(window.innerWidth) {
+					return {
+						width: window.innerWidth,
+						height: window.innerHeight
+					}
+				} else {
+					if(document.compatMode === 'BackCompat') {
+						return {
+							width: document.body.clientWidth,
+							height: document.body.clientHeight
+						}
+					} else {
+						return {
+							width: document.documentElement.clientWidth,
+							height: document.documentElement.clientHeight
+						}
+					}
+
+				}
+			}
+
+			function getScrollSize() {
+				if(document.body.scrollWidth) {
+					return {
+						width: document.body.scrollWidth,
+						height: document.body.scrollHeight
+					}
+				} else {
+					return {
+						width: document.documentElement.scrollWidth,
+						height: document.documentElement.scrollHeight
+					}
+				}
+			}
+
+			var div = document.getElementById("div");
+			div.onclick = function(e) {
 				var e = e || window.event;
-				/*e.stopPropagation();*/
-				e.cancelBubble = true;
-				console.log('2')
-			})
-			addEvent(oH2,'click',function(){
-				console.log('3')
-			})
-			
-			
-			
-			
-			
-			
+				console.log(e)
+				console.log(e.clientX, e.clientY);
+				console.log(e.pageX, e.pageY);
+				console.log(e.offsetX, e.offsetY); //相对于父级元素的偏移
+				console.log(pagePos(e).X);
+			}
+
+			function pagePos(e) {
+				var sLeft = getScrollOffset().left,
+					sTop = getScrollOffset().top,
+					cLeft = document.documentElement.clientLeft || 0,
+					cTop = document.documentElement.clientTop || 0;
+				return {
+					X: e.clientX + sLeft - cLeft,
+					Y: e.clientY + sTop - cTop
+				}
+			}
+			var div = document.getElementById('div');
+
+			;
+			(function() {
+				Node.prototype.getCss = function() {
+					var obj = {};
+					for(var i = 0; i < arguments.length; i++) {
+						if(window.getComputedStyle) {
+							if(arguments[i]) {
+								obj[arguments[i]] = window.getComputedStyle(this, null)[arguments[i]]; //这里的null是填伪元素，获取伪元素的样式（after）
+							} else {
+								obj.arguments[i] = window.getComputedStyle(this, null);
+							}
+						} else {
+							if(arguments[i]) {
+								obj[arguments[i]] = elem.currentStyle[arguments[i]];
+							} else {
+								obj[arguments[i]] = elem.currentStyle;
+							}
+						}
+					}
+					return obj;
+				}
+			})();
+
+			function getStyle(el, type) {
+				if(window.getComputedStyle) {
+					if(type) {
+						return window.getComputedStyle(el, null)[type];
+					} else {
+						return window.getComputedStyle(el, null);
+					}
+				} else {
+					if(type) {
+						return el.currentStyle[type];
+					} else {
+						return el.currentStyle;
+					}
+				}
+
+			}
+
+			//			if (confirm('你爱我吗?')) {
+			//				alert('我也爱你')
+			//			} else{
+			//				alert('我也不爱你')
+			//			}
+			//			var result = prompt('你今年几岁','tyt');
+			//			if(result != null){
+			//				console.log(result);
+			//			}
+
+			function pageXY(e) { // => 这里e是事件对象，MouseEvent
+				var scrollLeft = getScrollOffset().left,
+					scrollTop = getScrollOffset().top,
+					clientLeft = document.documentElement.clientLeft || 0,
+					clientTop = document.documentElement.clientTop || 0;
+				return {
+					X: e.clientX + scrollLeft - clientLeft, // clientX/clientY 是点击点与所在父级元素的偏移
+					Y: e.clientY + scrollTop - clientTop
+				}
+			}
 		</script>
 	</body>
 
