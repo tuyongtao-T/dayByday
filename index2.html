@@ -1,23 +1,80 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
+		<script src="JS文件/20.ajax封装.js" type="text/javascript" charset="utf-8"></script>
 	</head>
+
 	<body>
-		<div>
-			
-		</div>
+		<button>
+			发送求情
+		</button>
 		<script type="text/javascript">
-			var div = document.getElementsByTagName('div')[0];
-			var data = {
-				"name": '屠永涛'
+			var div = document.getElementsByTagName('button')[0];
+			div.onclick = function() {
+				myAjax({
+					type: 'get',
+					url: 'ajax2.json',
+					dataType: '',
+					timeout: 3000,
+					data: {
+						username: 'tyt',
+						password: '12345'
+					},
+					fnS: function(str) {
+						console.log(str.responseText);
+					},
+					fnE: function() {
+						console.log("资源不存在");
+					}
+				})
 			}
-			data = JSON.stringify(data);
-			div.setAttribute('data-info',data);
-			var  xhr = new XMLHttpRequest();
-			console.log(xhr)
+
+			function myAjax(obj) {
+				var xhr,
+					timer,
+					dataStr = datatoStr(obj.data);
+				if(window.XMLHttpRequest) {
+					xhr = new XMLHttpRequest();
+				} else {
+					xhr = new ActiveXObject('Microsoft.XMLHTTP');
+				}
+				if(obj.type.toLowerCase() === 'get') {
+					xhr.open('GET', obj.url + '?' + dataStr, true);
+					xhr.send();
+				} else {
+					xhr.open('POST', obj.url, true);
+					xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					xhr.send(dataStr);
+				}
+				if(xhr.readyState === '4') {
+					if(xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+						obj.fnS(xhr)
+					} else {
+						console.log("错误码" + xhr.status);
+					}
+				}
+				if(obj.timeout) {
+					setInterval(function() {
+						xhr.abort();
+						clearInterval(timer);
+					}, obj.timeout);
+				}
+
+			}
+
+			function datatoStr(data) {
+				var arr = [];
+				data.t = new Date().getTime();
+				for(key in data) {
+					arr.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+				}
+				return arr.join('&');
+			}
 		</script>
-		
+
 	</body>
+
 </html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="JS文件/20.ajax封装.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<button>
+			发送求情
+		</button>
+		<script type="text/javascript">
+			var div = document.getElementsByTagName('button')[0];
+			div.onclick = function() {
+				ajax({
+					type: 'get',
+					url: 'ajax.php',
+					dataType: '',
+					timeout: 3000,
+					data: {
+						username: 'tyt',
+						password: '12345'
+					},
+					fnS: function(str) {
+						console.log(str);
+					},
+					fnE: function() {
+						console.log("资源不存在");
+					}
+				})
+			}
+		</script>
+
+	</body>
+
+</html>
