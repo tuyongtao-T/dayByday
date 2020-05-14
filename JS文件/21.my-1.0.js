@@ -8,6 +8,12 @@
  * 6. el.css()
  * 7. el.attr()
  * 8. ajax(obj)
+ * 9. el.addEvent(),el.removeEvent(),e.stopBubble()
+ * 10. el.docOffset() 
+ * 11. getViewport()
+ * 
+ * 
+ * 
  * 
  */
 
@@ -95,6 +101,7 @@ function toArray(nodes) {
 	Node.prototype.css = function(obj) {
 		if(obj instanceof Object) {
 			// 设置元素样式
+			// 设置folat 时
 			for(var key in obj) {
 				this.style[key] = obj[key];
 			}
@@ -213,7 +220,6 @@ function ajax(obj) {
 	}
 
 }
-
 function datatoStr(data) {
 	var arr = [];
 	data.t = new Date().getTime();
@@ -222,3 +228,111 @@ function datatoStr(data) {
 	}
 	return arr.join('&');
 }
+
+// 9. 添加事件和移除事件，阻止冒泡
+(function(){
+	Node.prototype.addEvent = function(type,fn){
+		if (this.addEventListener) {
+			this.addEventListener(type,fn,false);
+			return this;
+		} else if(this.attachEvent){
+			this.attachEvent('on' + type,function(){
+				fn.call(this);
+			});
+			return this;
+		}else {
+			this['on' + type] = fn;
+			return this;
+		}
+	}
+	Node.prototype.removeEvent = function(type,fn){
+		if (this.addEventListener) {
+			this.removeEventListener(type,fn,false);
+			return this;
+		} else if(this.attachEvent){
+			this.detachEvent('on' + type,function(){
+				fn.call(this);
+			});
+			return this;
+		}else {
+			this['on' + type] = null;
+			return this;
+		}
+	}
+	Event.prototype.stopBubble = function() {
+		return this.stopPropagation() ? this.stopPropagation() : this.cancelBubble = true;
+	}
+})();
+
+// 10.获取元素在整个页面中的偏移量
+(function(){
+	Node.prototype.getdocOffset = function(){
+		var parent = this.offsetParent,
+			offsetLeft = this.offsetLeft,
+			offsetTop = this.offsetTop;
+		while(parent){
+			offsetLeft += parent.offsetLeft;
+			offsetTop += parent.offsetTop;
+			parent = parent.offsetParent;
+		}
+		return {
+			left: offsetLeft,
+			top: offsetTop
+		}
+	}
+})();
+
+// 11. 客户区大小
+function getViewport () {
+	if (window.innerWidth) {
+		return {
+			width: window.innerWidth,
+			height: window.innerHeight
+		}
+	} else{
+		if (document.compatMode === 'BackCompat') {
+			return {
+				width: document.body.clientWidth,
+				height: document.body.clientHeight
+			}
+		} else{
+			return {
+				width: document.documentElement.clientWidth,
+				height: document.documentElement.clientHeight
+			}
+		}
+		
+	}
+}
+
+// 12. 获取滚动条距离，距离文档顶部的距离; 获取滚动条尺寸
+function getScrollOffset () {
+	if (window.pageXOffset) {
+		return {
+			left: window.pageXOffset,
+			top: window.pageYOffset
+		}
+	} else{
+		return {
+			left: document.body.scrollLeft + document.documentElement.scrollLeft,
+			top: document.body.scrollTop + document.documentElement.scrollTop
+		}
+	}
+}
+function getScrollSize () {
+	if (document.body.scrollWidth) {
+		return {
+			width: document.body.scrollWidth,
+			height: document.body.scrollHeight
+		}
+	} else{
+		return {
+			width: document.documentElement.scrollWidth,
+			height: document.documentElement.scrollHeight
+		}
+	}
+}
+
+// 13.
+
+

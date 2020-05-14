@@ -5,6 +5,7 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<script src="JS文件/20.ajax封装.js" type="text/javascript" charset="utf-8"></script>
+		<script src="JS文件/21.my-1.0.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 
 	<body>
@@ -73,11 +74,36 @@
 				}
 				return arr.join('&');
 			}
-			
-			
-			
 		</script>
 
+		<div id="d0" style="width: 300px; height: 300px; background: pink; margin: 50px;">
+			<div id="d1" style="width: 200px; height: 200px; background: red;margin-left: 50px;">
+				<div id="d2" style="width: 100px; height: 100px; background:blue;">
+
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			T('#d0').addEvent('click', function(e) {
+				console.log('d0')
+			});
+			T('#d1').addEvent('click', function(e) {
+				console.log('d1')
+				e.stopBubble();
+			});
+			T('#d2').addEvent('click', function(e) {
+				var e = e || window.event,
+					tar = e.target || e.srcElement;
+				e.stopBubble();
+				console.log('d2');
+			});
+			var filter = function(node) {
+				return node.nodeName.toLowerCase() == "div" ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+			}
+			var iterator = document.createNodeIterator(T('#d0'), NodeFilter.SHOW_ALL, filter);
+			var node = iterator.nextNode();
+			console.log(node); //HTMLHeadingElement
+		</script>
 	</body>
 
 </html>

@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			
+
 		</title>
 		<style type="text/css">
 			* {
@@ -45,16 +45,18 @@
 	</head>
 
 	<body>
-		<div id="div" class="tyt" title="你是猪" style="width: 300px;" data-name= '屠永涛'onclick="test()">
+		<div id="div" class="tyt" title="你是猪" style="width: 300px;" data-name='屠永涛' onclick="test()">
 			我爱你
 			<div style="height: 100px;background: red; " id="d0">
 
 			</div>
-			<div style="height: 100px;background: #008000;"id="d1">
-					nishizhu
+			<div style="height: 100px;background: #008000;" id="d1">
+				nishizhu
 			</div>
-			<div style="height: 100px;background: greenyellow;"id="d2" class="active">
-
+			<div style="height: 100px;background: greenyellow;" id="d2" class="active">
+					<div class="d3">
+						
+					</div>
 			</div>
 		</div>
 		<script type="text/javascript">
@@ -244,117 +246,117 @@
 			//					}
 			//				}
 			//			}
-//			function getScrollOffset() {
-//				if(window.pageXOffset) {
-//					return {
-//						left: window.pageXOffset,
-//						top: window.pageYOffset
-//					}
-//				} else {
-//					return {
-//						left: document.body.scrollLeft + document.documentElement.scrollLeft,
-//						top: document.body.scrollTop + document.documentElement.scrollTop
-//					}
-//				}
-//			}
-//
-//			function getViewportSize() {
-//				if(window.innerWidth) {
-//					return {
-//						width: window.innerWidth,
-//						height: window.innerHeight
-//					}
-//				} else {
-//					if(document.compatMode === 'BackCompat') {
-//						return {
-//							width: document.body.clientWidth,
-//							height: document.body.clientHeight
-//						}
-//					} else {
-//						return {
-//							width: document.documentElement.clientWidth,
-//							height: document.documentElement.clientHeight
-//						}
-//					}
-//
-//				}
-//			}
-//
-//			function getScrollSize() {
-//				if(document.body.scrollWidth) {
-//					return {
-//						width: document.body.scrollWidth,
-//						height: document.body.scrollHeight
-//					}
-//				} else {
-//					return {
-//						width: document.documentElement.scrollWidth,
-//						height: document.documentElement.scrollHeight
-//					}
-//				}
-//			}
-//
-//			var div = document.getElementById("div");
-//			div.onclick = function(e) {
-//				var e = e || window.event;
-//				console.log(e)
-//				console.log(e.clientX, e.clientY);
-//				console.log(e.pageX, e.pageY);
-//				console.log(e.offsetX, e.offsetY); //相对于父级元素的偏移
-//				console.log(pagePos(e).X);
-//			}
-//
-//			function pagePos(e) {
-//				var sLeft = getScrollOffset().left,
-//					sTop = getScrollOffset().top,
-//					cLeft = document.documentElement.clientLeft || 0,
-//					cTop = document.documentElement.clientTop || 0;
-//				return {
-//					X: e.clientX + sLeft - cLeft,
-//					Y: e.clientY + sTop - cTop
-//				}
-//			}
-//			var div = document.getElementById('div');
-//
-//			;
-//			(function() {
-//				Node.prototype.getCss = function() {
-//					var obj = {};
-//					for(var i = 0; i < arguments.length; i++) {
-//						if(window.getComputedStyle) {
-//							if(arguments[i]) {
-//								obj[arguments[i]] = window.getComputedStyle(this, null)[arguments[i]]; //这里的null是填伪元素，获取伪元素的样式（after）
-//							} else {
-//								obj.arguments[i] = window.getComputedStyle(this, null);
-//							}
-//						} else {
-//							if(arguments[i]) {
-//								obj[arguments[i]] = elem.currentStyle[arguments[i]];
-//							} else {
-//								obj[arguments[i]] = elem.currentStyle;
-//							}
-//						}
-//					}
-//					return obj;
-//				}
-//			})();
-//
-//			function getStyle(el, type) {
-//				if(window.getComputedStyle) {
-//					if(type) {
-//						return window.getComputedStyle(el, null)[type];
-//					} else {
-//						return window.getComputedStyle(el, null);
-//					}
-//				} else {
-//					if(type) {
-//						return el.currentStyle[type];
-//					} else {
-//						return el.currentStyle;
-//					}
-//				}
-//
-//			}
+			//			function getScrollOffset() {
+			//				if(window.pageXOffset) {
+			//					return {
+			//						left: window.pageXOffset,
+			//						top: window.pageYOffset
+			//					}
+			//				} else {
+			//					return {
+			//						left: document.body.scrollLeft + document.documentElement.scrollLeft,
+			//						top: document.body.scrollTop + document.documentElement.scrollTop
+			//					}
+			//				}
+			//			}
+			//
+			//			function getViewportSize() {
+			//				if(window.innerWidth) {
+			//					return {
+			//						width: window.innerWidth,
+			//						height: window.innerHeight
+			//					}
+			//				} else {
+			//					if(document.compatMode === 'BackCompat') {
+			//						return {
+			//							width: document.body.clientWidth,
+			//							height: document.body.clientHeight
+			//						}
+			//					} else {
+			//						return {
+			//							width: document.documentElement.clientWidth,
+			//							height: document.documentElement.clientHeight
+			//						}
+			//					}
+			//
+			//				}
+			//			}
+			//
+			//			function getScrollSize() {
+			//				if(document.body.scrollWidth) {
+			//					return {
+			//						width: document.body.scrollWidth,
+			//						height: document.body.scrollHeight
+			//					}
+			//				} else {
+			//					return {
+			//						width: document.documentElement.scrollWidth,
+			//						height: document.documentElement.scrollHeight
+			//					}
+			//				}
+			//			}
+			//
+			//			var div = document.getElementById("div");
+			//			div.onclick = function(e) {
+			//				var e = e || window.event;
+			//				console.log(e)
+			//				console.log(e.clientX, e.clientY);
+			//				console.log(e.pageX, e.pageY);
+			//				console.log(e.offsetX, e.offsetY); //相对于父级元素的偏移
+			//				console.log(pagePos(e).X);
+			//			}
+			//
+			//			function pagePos(e) {
+			//				var sLeft = getScrollOffset().left,
+			//					sTop = getScrollOffset().top,
+			//					cLeft = document.documentElement.clientLeft || 0,
+			//					cTop = document.documentElement.clientTop || 0;
+			//				return {
+			//					X: e.clientX + sLeft - cLeft,
+			//					Y: e.clientY + sTop - cTop
+			//				}
+			//			}
+			//			var div = document.getElementById('div');
+			//
+			//			;
+			//			(function() {
+			//				Node.prototype.getCss = function() {
+			//					var obj = {};
+			//					for(var i = 0; i < arguments.length; i++) {
+			//						if(window.getComputedStyle) {
+			//							if(arguments[i]) {
+			//								obj[arguments[i]] = window.getComputedStyle(this, null)[arguments[i]]; //这里的null是填伪元素，获取伪元素的样式（after）
+			//							} else {
+			//								obj.arguments[i] = window.getComputedStyle(this, null);
+			//							}
+			//						} else {
+			//							if(arguments[i]) {
+			//								obj[arguments[i]] = elem.currentStyle[arguments[i]];
+			//							} else {
+			//								obj[arguments[i]] = elem.currentStyle;
+			//							}
+			//						}
+			//					}
+			//					return obj;
+			//				}
+			//			})();
+			//
+			//			function getStyle(el, type) {
+			//				if(window.getComputedStyle) {
+			//					if(type) {
+			//						return window.getComputedStyle(el, null)[type];
+			//					} else {
+			//						return window.getComputedStyle(el, null);
+			//					}
+			//				} else {
+			//					if(type) {
+			//						return el.currentStyle[type];
+			//					} else {
+			//						return el.currentStyle;
+			//					}
+			//				}
+			//
+			//			}
 
 			//			if (confirm('你爱我吗?')) {
 			//				alert('我也爱你')
@@ -365,89 +367,97 @@
 			//			if(result != null){
 			//				console.log(result);
 			//			}
-//
-//			function pageXY(e) { // => 这里e是事件对象，MouseEvent
-//				var scrollLeft = getScrollOffset().left,
-//					scrollTop = getScrollOffset().top,
-//					clientLeft = document.documentElement.clientLeft || 0,
-//					clientTop = document.documentElement.clientTop || 0;
-//				return {
-//					X: e.clientX + scrollLeft - clientLeft, // clientX/clientY 是点击点与所在父级元素的偏移
-//					Y: e.clientY + scrollTop - clientTop
-//				}
-//			}
-			
-//			function childel1 (node) {
-//				var arr = [],
-//					children = node.childNodes,
-//					len = children.length;
-//				for (var i = 0; i < len; i++) {
-//					if (children[i].nodeType === 1) {
-//						arr.push(children[i]);
-//					}
-//				}
-//				return arr;
-//			}
-//			function childel2 (node) {
-//				var children = node.childNodes,
-//					len = children.length,
-//					obj = {
-//						'length': 0,
-//						'push': Array.prototype.push,
-//						'splice': Array.prototype.splice
-//					};
-////					console.log(children.item(1));
-//				for (var i = 0; i < len; i++){
-//					if(children[i].nodeType === 1){
-////						obj[obj.length] = children[i];
-////						obj.length += 1; 
-//						obj.push(children[i]);
-//					}
-//				}
-//				return obj;
-//				
-//			}
-			
+			//
+			//			function pageXY(e) { // => 这里e是事件对象，MouseEvent
+			//				var scrollLeft = getScrollOffset().left,
+			//					scrollTop = getScrollOffset().top,
+			//					clientLeft = document.documentElement.clientLeft || 0,
+			//					clientTop = document.documentElement.clientTop || 0;
+			//				return {
+			//					X: e.clientX + scrollLeft - clientLeft, // clientX/clientY 是点击点与所在父级元素的偏移
+			//					Y: e.clientY + scrollTop - clientTop
+			//				}
+			//			}
+
+			//			function childel1 (node) {
+			//				var arr = [],
+			//					children = node.childNodes,
+			//					len = children.length;
+			//				for (var i = 0; i < len; i++) {
+			//					if (children[i].nodeType === 1) {
+			//						arr.push(children[i]);
+			//					}
+			//				}
+			//				return arr;
+			//			}
+			//			function childel2 (node) {
+			//				var children = node.childNodes,
+			//					len = children.length,
+			//					obj = {
+			//						'length': 0,
+			//						'push': Array.prototype.push,
+			//						'splice': Array.prototype.splice
+			//					};
+			////					console.log(children.item(1));
+			//				for (var i = 0; i < len; i++){
+			//					if(children[i].nodeType === 1){
+			////						obj[obj.length] = children[i];
+			////						obj.length += 1; 
+			//						obj.push(children[i]);
+			//					}
+			//				}
+			//				return obj;
+			//				
+			//			}
 		</script>
 		<script src="JS文件/21.my-1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-//			console.log(T('#div'));
-//			console.log(T('div')[1].style.background);
-////			console.log(document.getElementsByTagName('div')[1].style.background);
-//			// 对于arguments对象 和 nodeList对象可以 使用Array.prototype.slice.call(node.childNodes,0)  类数组  => 数组
-//			//slice()返回指定数组的一个子数组，指定两个参数，开始位置和结束位置
-//			var nodes = T('div')[2];
-//			nodes.siblings();
-//			var div2 = T('#d2');
-//			var div3 = document.createElement("div");
-//			div.insertAfter(div3,div2);
-//			console.log(T('#div'));
+			//			console.log(T('#div'));
+			//			console.log(T('div')[1].style.background);
+			////			console.log(document.getElementsByTagName('div')[1].style.background);
+			//			// 对于arguments对象 和 nodeList对象可以 使用Array.prototype.slice.call(node.childNodes,0)  类数组  => 数组
+			//			//slice()返回指定数组的一个子数组，指定两个参数，开始位置和结束位置
+			//			var nodes = T('div')[2];
+			//			nodes.siblings();
+			//			var div2 = T('#d2');
+			//			var div3 = document.createElement("div");
+			//			div.insertAfter(div3,div2);
+			//			console.log(T('#div'));
 		</script>
 		<h1> 123</h1>
 		<h2> 234</h2>
 		<script type="text/javascript">
 			// 关于
 			document.title = new Date()
-			document.write("小屠");
-			document.write();
-//			var div = T('#div');
+			//			document.write("小屠");
+			//			document.write();
+			//			var div = T('#div');
 			var div = document.getElementById("div")
-//			var h1 = T('h1')[0];
-//			var h2 = T('h2');
-//			var test = document.createElement('h1');
-//			if (h1.__proto__ === test.__proto__) {
-//				console.log("一样");
-//			}
-//			function test () {
-//				console.log('bbb')
-//			}
+			//			var h1 = T('h1')[0];
+			//			var h2 = T('h2');
+			//			var test = document.createElement('h1');
+			//			if (h1.__proto__ === test.__proto__) {
+			//				console.log("一样");
+			//			}
+			//			function test () {
+			//				console.log('bbb')
+			//			}
 			var obj = {
-				'width' : 1,
+				'width': 1,
 				"heigth": 3
 			}
-			var arr = ['width','height'];
+			var arr = ['width', 'height'];
 			var str = 'width';
-			var d2 = T('#d2')
+			var d2 = T('#d2');
+			var d3 = T('.d3')[0]
+		</script>
+		<script type="text/javascript">
+			var sheet = document.styleSheets[0];
+			var rules = sheet.cssRules || sheet.rules;
+			var rule = rules[0];
+			console.log(rules);
+			rule.style.width = '600px'
+			
 		</script>
 	</body>
 

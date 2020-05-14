@@ -33,6 +33,6 @@ function addEvent(elem, type, fn) {
 function stopBubble(e) {
 	return e.stopPropagation() ? e.stopPropagation() : e.cancelBubble = true;
 }
-MouseEvent.prototype.stopBubble = function() {
-	return this.stopPropagation() ? this.stopPropagation() : this.cancelBubble = true;
-}
+//MouseEvent.prototype.stopBubble = function() {
+//	return this.stopPropagation() ? this.stopPropagation() : this.cancelBubble = true;
+//}

@@ -1,4 +1,4 @@
-/* offsetLeft/offsetTop 是用来获取元素相对于父级定位元素的偏移量
+/* offsetLeft/offsetTop 是用来获取元素相对于块级定位元素的偏移量
  * 这里直接获取元素相对于body的偏移量
  */
 function getElemDocPosition (el) {
@@ -7,7 +7,7 @@ function getElemDocPosition (el) {
 		offsetTop = el.offsetTop;
 	while (parent){
 		offsetLeft += parent.offsetLeft;
-		offsetTop = parent.offsetTop;
+		offsetTop += parent.offsetTop;
 		parent = parent.offsetParent;
 	}
 	return {
