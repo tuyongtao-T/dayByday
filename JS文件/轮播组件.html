@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		
+		<script type="text/javascript">
+			var slider = {
+				img: {
+					width: '400px',
+					height: '300px',
+					src: ['1.png', '2.png', '3.png']
+				}
+			}
+
+			function Slider(obj) {
+				/*获取图片信息*/
+				var imgWidth = obj.img.width,
+					imgHeight = obj.img.height,
+					imgSrc = obj.img.src,
+					/*获取图片张数*/
+					len = imgSrc.length;
+
+				/*创建文档元素*/
+				var fragment = document.DocumentFragment(),
+					div = document.createElement("div"),
+					ul = document.createElement("ul");
+				div.className = 'slider';
+				ul.className = 'slider-list';
+
+				for(var i = 0; i < len; i++) {
+					li = document.createElement("li"),
+						a = document.createElement("a"),
+						img = document.createElement("img");
+					img.src = imgSrc[i];
+					li.className = 'slider-item';
+					a.appendChild(img);
+					li.appendChild(a);
+					ul.appendChild(li);
+				}
+			}
+			
+			var slider = new Slider(
+				slider
+			);
+			
+		</script>
+		<script src="../jquery/jquery-3.4.1.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function() {
+				function slider() {
+					$(".slider").mouseover(function() {
+							$("#prev").show();
+							$("#next").show();
+						})
+						.mouseleave(function() {
+							$("#prev").hide();
+							$("#next").hide();
+						})
+				}
+				slider();
+
+				function PPT() {
+					var index = 0;
+					var timer;
+					var len = $(".showImg li").length;
+
+					function slideTo(index) {
+						$(".showImg li").eq(index).fadeIn(800).siblings().fadeOut(800);
+						$(".circle li").eq(index).css({
+								background: "#ff5000",
+								opacity: '.5'
+							})
+							.siblings().css({
+								background: "white",
+								opacity: '.4'
+							});
+					}
+
+					slideTo(index);
+
+					function auto() {
+						timer = setInterval(function() {
+							index++;
+							if(index === len) {
+								index = 0;
+							}
+							slideTo(index);
+						}, 2500);
+					}
+					auto();
+
+					$("#next").click(function() {
+						clearInterval(timer);
+						index++;
+						if(index === len) {
+							index = 0;
+						}
+						slideTo(index);
+						auto();
+					})
+
+					$("#prev").click(function() {
+						clearInterval(timer);
+						index--;
+						if(index === -1) {
+							index = len;
+						}
+						slideTo(index);
+						auto();
+					})
+					//序号轮播
+					$(".circle li").click(function() {
+						clearInterval(timer);
+						var index = $(this).index();
+						slideTo(index);
+						auto();
+					});
+					//鼠标悬浮 停止
+					$(".showImg li").mouseover(function() {
+						clearInterval(timer);
+					});
+					$(".showImg li").mouseout(function() {
+						auto();
+					});
+				}
+				PPT();
+			})
+		</script>
+	</body>
+
+</html>
