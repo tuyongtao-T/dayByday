@@ -11,6 +11,8 @@
  * 9. el.addEvent(),el.removeEvent(),e.stopBubble()
  * 10. el.docOffset() 
  * 11. getViewport()
+ * 12. getScrollsize()
+ * 13. pageXY()
  * 
  * 
  * 
@@ -333,6 +335,16 @@ function getScrollSize () {
 	}
 }
 
-// 13.
+// 13. 获取鼠标点击在页面中的位置
+function pageXY(e) { // => 这里e是事件对象，MouseEvent
+	var scrollLeft = getScrollOffset().left,
+		scrollTop = getScrollOffset().top,
+		clientLeft = document.documentElement.clientLeft || 0, //ie9一下前面是undefined ,就取0
+		clientTop = document.documentElement.clientTop || 0;
+	return {
+		X: e.clientX + scrollLeft - clientLeft, // clientX/clientY 是点击点与所在父级元素的偏移
+		Y: e.clientY + scrollTop - clientTop
+	}
+}
 
 

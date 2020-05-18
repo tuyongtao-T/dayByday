@@ -6,10 +6,15 @@
 		<title></title>
 		<script src="JS文件/20.ajax封装.js" type="text/javascript" charset="utf-8"></script>
 		<script src="JS文件/21.my-1.0.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			/*div{
+				border-radius: ;
+			}*/
+		</style>
 	</head>
 
 	<body>
-		<button>
+		<!--<button>
 			发送求情
 		</button>
 		<script type="text/javascript">
@@ -74,15 +79,15 @@
 				}
 				return arr.join('&');
 			}
-		</script>
-
+		</script>-->
+<!--
 		<div id="d0" style="width: 300px; height: 300px; background: pink; margin: 50px;">
 			<div id="d1" style="width: 200px; height: 200px; background: red;margin-left: 50px;">
 				<div id="d2" style="width: 100px; height: 100px; background:blue;">
 
 				</div>
 			</div>
-		</div>
+		</div>-->
 		<!--<script type="text/javascript">
 			T('#d0').addEvent('click', function(e) {
 				console.log('d0')
@@ -112,14 +117,15 @@
 			<h1>1.1</h1>
 			<ul>
 				<h2> 2.1</h2>
-				<li> <h3>2.2.1 </h3></li>
+				<li>
+					<h3>2.2.1 </h3></li>
 			</ul>
 		</div>
 		<script type="text/javascript">
-//			var div = document.getElementById("div1");
-//			var iterator = document.createNodeIterator(div, NodeFilter.SHOW_ELEMENT, null, false);
-//			var node = iterator.nextNode();
-//			console.log(node);
+			//			var div = document.getElementById("div1");
+			//			var iterator = document.createNodeIterator(div, NodeFilter.SHOW_ELEMENT, null, false);
+			//			var node = iterator.nextNode();
+			//			console.log(node);
 			//			while(node !== null) {
 			//				console.log(node.nodeName); //输出标签名
 			//				node = iterator.nextNode();
@@ -140,31 +146,82 @@
 			//			node = iterator.nextNode();
 			//			console.log(node);
 			//			
-//			var div = document.getElementById("div1");
-//			var filter = function(node) {
-//				if(node.nodeName.toLowerCase() == "li") {
-//					return NodeFilter.FILTER_ACCEPT;
-//				} else {
-//					return NodeFilter.FILTER_SKIP;
-//				}
-//			};
-//			var iterator = document.createNodeIterator(div, NodeFilter.SHOW_ELEMENT, filter, false);
-//			var node = iterator.nextNode();
-//			while(node !== null) {
-//				console.log(node.firstChild.nodeValue);
-//				node = iterator.nextNode();
-//			}
-			var div = T('#div1');
-			var h1 = document.createElement("h1");
-			var filter = function(node){
-				return node.__proto__ === h1.__proto__ ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
-			}
-			var iterator = document.createNodeIterator(div,NodeFilter.SHOW_ELEMENT,filter,false );
-			node = iterator.nextNode();
-			while(node !== null){
-				console.log(node);
-				node = iterator.nextNode();
-			}
+			//			var div = document.getElementById("div1");
+			//			var filter = function(node) {
+			//				if(node.nodeName.toLowerCase() == "li") {
+			//					return NodeFilter.FILTER_ACCEPT;
+			//				} else {
+			//					return NodeFilter.FILTER_SKIP;
+			//				}
+			//			};
+			//			var iterator = document.createNodeIterator(div, NodeFilter.SHOW_ELEMENT, filter, false);
+			//			var node = iterator.nextNode();
+			//			while(node !== null) {
+			//				console.log(node.firstChild.nodeValue);
+			//				node = iterator.nextNode();
+			//			}
+//			var div = T('#d0');
+			//			var h1 = document.createElement("h1");
+			//			var filter = function(node){
+			//				return node.__proto__ === h1.__proto__ ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+			//			}
+			//			var iterator = document.createNodeIterator(div,NodeFilter.SHOW_ELEMENT,filter,false );
+			//			node = iterator.nextNode();
+			//			while(node !== null){
+			//				console.log(node);
+			//				node = iterator.nextNode();
+			//			}
+//			div.addEvent('click', function(e) {
+//				var e = e || window.event;
+//				console.log('单击了');
+//				
+//			})
+//			div.addEvent('dblclick', function(e) {
+//				var e = e || window.event;
+//				console.log('双击了');
+//				
+//			})
+		</script>
+		<!--<input type="text" name="" id="in1" value="" />-->
+		<div class="div1"></div>
+		
+		<script type="text/javascript">
+			var div1 = T('.div1')[0];
+			div1.css({
+				width: '40px',
+				height: '40px',
+				background: 'pink',
+				border: '1px solid red',
+				borderRadius: '50%'
+			})
+			
+			document.body.addEvent('keydown',function(e) {
+				var e = e || window.event;
+				console.log(typeof e.key)
+				if(e.keyCode === 39){
+					var left =  parseInt(div1.css('margin-left')) + 20;
+					console.log(left)
+					left = 'left' + 'px'
+					div1.css({
+						maginLeft: left
+					})
+				}
+			})
+			
+		</script>
+		<script type="text/javascript">
+			var currentDate = new Date(); 
+			var startDate = new Date(2018, 11, 25);
+			var date3 = currentDate-startDate;
+			console.log(date3)
+			var days=Math.floor(date3/(24*3600*1000));
+			var leave1=date3%(24*3600*1000);     //计算天数后剩余的毫秒数
+			var hours=Math.floor(leave1/(3600*1000));
+			var leave2=leave1%(3600*1000);        //计算小时数后剩余的毫秒数
+			var minutes=Math.floor(leave2/(60*1000));
+			var leave3=leave2%(60*1000);          //计算分钟数后剩余的毫秒数
+			var seconds=Math.round(leave3/1000);
+			console.log(days,hours,minutes,seconds)
 			
 		</script>
 	</body>
