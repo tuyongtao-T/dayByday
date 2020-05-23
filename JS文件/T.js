@@ -1,6 +1,6 @@
 ;
 (function(window, undefined) {
-	var T = function(selector) {
+	var T = tyt = function(selector) {
 		return new T.prototype.init(selector);
 	}
 	T.prototype = {
@@ -214,6 +214,18 @@
 
 	//DOM操作相关方法
 	T.prototype.extend({
+		children: function(){
+			let res = [];
+			T(this).each(function(k, v){
+				let children = v.childNodes;
+				T(children).each(function(key, value){
+					if (value.nodeType === 1) {
+						res.push(value);
+					}
+				});
+			})
+			return T(res);
+		},
 		empty: function() {
 			//1.遍历找到的所有元素
 			this.each(function(key, value) {
@@ -349,7 +361,7 @@
 			return this;
 		},
 		////元素添加指定内容到前面
-		inserBefore: function(sele){
+		insertBefore: function(sele){
 			//调用者.inserBefore(插入的元素，参考元素)
 			let Ttarget = T(sele),
 				Tthis = this,
@@ -375,8 +387,68 @@
 			//返回所有添加的元素
 			return T(res);
 		},
-		berfore: function(sele){
-			
+		insertAfter: function(sele){
+			//调用者.inserBefore(插入的元素，参考元素)
+			let Ttarget = T(sele),
+				Tthis = this,
+				res = [];
+			//1.遍历取出所有指定元素
+			T.each(Ttarget,function(key, value){
+				let parent = value.parentNode;
+				//2.遍历取出所有元素
+				Tthis.each(function(k,v){
+					//3.判断当前时候是第0个指定的元素
+					if (key === 0) {
+						//直接添加
+						parent.insertBefore(v,value.nextSibling);
+						res.push(v);
+					} else{
+						//先拷贝再添加
+						let temp = v.cloneNode(true);
+						parent.insertBefore(temp,value.nextSibling);
+						res.push(temp);
+					}
+				})
+			});
+			//返回所有添加的元素
+			return T(res);
+		},
+		before: function(sele){
+			if (T.isString(sele)) {
+				T.each(this,function(key, value){
+					this.innerHTML = sele + this.innerHTML;
+				})
+			} else{
+				T(sele).insertBefore(this);
+			}
+			return this;
+		},
+		after: function(sele){
+			if (T.isString(sele)) {
+				T.each(this,function(key, value){
+					this.innerHTML += sele;
+				})
+			} else{
+				T(sele).insertAfter(this);
+			}
+			return this;
+		},
+		replaceAll: function(sele){
+			T(this).insertBefore(T(sele));
+			T(sele).remove();
+			return this;
+		},
+		replaceWith: function(sele){
+			T(sele).insertBefore(this);
+			T(this).remove();
+			return this;
+		},
+		siblings: function() {
+			console.log(this)
+			this[0].remove();
+			console.log(this.parentNode)
+			let children = T(this[0].parentNode).chidren();
+			console.log(children)
 		}
 	});
 
