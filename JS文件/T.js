@@ -78,11 +78,23 @@
 		//[].push找到数组的push方法
 		//冒号前面的push将来有T对象调用
 		//相当于[].push.apply(this)
-		push: [].push,
-		sort: [].sort,
-		splice: [].splice,
-		toArray: function() {
-			return [].slice.call(this);
+//		push: [].push,
+//		sort: [].sort,
+//		splice: function() {
+//			this.toArray().splice(arguments);
+//			//return this;
+//		},
+		toArray: function () {
+			let res = null;
+			try {
+				res = Array.prototype.slice.call(this, 0);
+			} catch(ex) {
+				res = new Array();
+				for(let i = 0; i < this.length; i++) {
+					res.push(this[i]);
+				}
+			}
+			return res;
 		},
 		get: function(num) {
 			if(arguments.length === 0) {
@@ -210,16 +222,17 @@
 			}
 			return res;
 		}
+
 	});
 
 	//DOM操作相关方法
 	T.prototype.extend({
-		children: function(){
+		children: function() {
 			let res = [];
-			T(this).each(function(k, v){
+			T(this).each(function(k, v) {
 				let children = v.childNodes;
-				T(children).each(function(key, value){
-					if (value.nodeType === 1) {
+				T(children).each(function(key, value) {
+					if(value.nodeType === 1) {
 						res.push(value);
 					}
 				});
@@ -292,15 +305,15 @@
 				Tthis = this,
 				res = [];
 			//1.遍历取出所有指定元素
-			T.each(Ttarget,function(key, value){
+			T.each(Ttarget, function(key, value) {
 				//2.遍历取出所有元素
-				Tthis.each(function(k,v){
+				Tthis.each(function(k, v) {
 					//3.判断当前时候是第0个指定的元素
-					if (key === 0) {
+					if(key === 0) {
 						//直接添加
 						value.appendChild(v);
 						res.push(v);
-					} else{
+					} else {
 						//先拷贝再添加
 						let temp = v.cloneNode(true);
 						value.appendChild(temp);
@@ -318,18 +331,18 @@
 				Tthis = this,
 				res = [];
 			//1.遍历取出所有指定元素
-			T.each(Ttarget,function(key, value){
+			T.each(Ttarget, function(key, value) {
 				//2.遍历取出所有元素
-				Tthis.each(function(k,v){
+				Tthis.each(function(k, v) {
 					//3.判断当前时候是第0个指定的元素
-					if (key === 0) {
+					if(key === 0) {
 						//直接添加
-						value.insertBefore(v,value.firstChild);
+						value.insertBefore(v, value.firstChild);
 						res.push(v);
-					} else{
+					} else {
 						//先拷贝再添加
 						let temp = v.cloneNode(true);
-						value.insertBefore(temp,value.firstChild);
+						value.insertBefore(temp, value.firstChild);
 						res.push(temp);
 					}
 				})
@@ -338,48 +351,48 @@
 			return T(res);
 		},
 		//元素添加指定内容到最后面
-		append: function(sele){
-			if (T.isString(sele)) {
-				T.each(this,function(key, value){
+		append: function(sele) {
+			if(T.isString(sele)) {
+				T.each(this, function(key, value) {
 					this.innerHTML += sele;
 				})
 				//this[0].innerHTML += sele;
-			} else{
+			} else {
 				T(sele).appendTo(this);
 			}
 			return this;
 		},
 		//元素添加指定内容到最前面
-		prepend: function(sele){
-			if (T.isString(sele)) {
-				T.each(this,function(key, value){
+		prepend: function(sele) {
+			if(T.isString(sele)) {
+				T.each(this, function(key, value) {
 					this.innerHTML = sele + this.innerHTML;
 				})
-			} else{
+			} else {
 				T(sele).prependTo(this);
 			}
 			return this;
 		},
 		////元素添加指定内容到前面
-		insertBefore: function(sele){
+		insertBefore: function(sele) {
 			//调用者.inserBefore(插入的元素，参考元素)
 			let Ttarget = T(sele),
 				Tthis = this,
 				res = [];
 			//1.遍历取出所有指定元素
-			T.each(Ttarget,function(key, value){
+			T.each(Ttarget, function(key, value) {
 				let parent = value.parentNode;
 				//2.遍历取出所有元素
-				Tthis.each(function(k,v){
+				Tthis.each(function(k, v) {
 					//3.判断当前时候是第0个指定的元素
-					if (key === 0) {
+					if(key === 0) {
 						//直接添加
-						parent.insertBefore(v,value);
+						parent.insertBefore(v, value);
 						res.push(v);
-					} else{
+					} else {
 						//先拷贝再添加
 						let temp = v.cloneNode(true);
-						parent.insertBefore(temp,value);
+						parent.insertBefore(temp, value);
 						res.push(temp);
 					}
 				})
@@ -387,25 +400,25 @@
 			//返回所有添加的元素
 			return T(res);
 		},
-		insertAfter: function(sele){
+		insertAfter: function(sele) {
 			//调用者.inserBefore(插入的元素，参考元素)
 			let Ttarget = T(sele),
 				Tthis = this,
 				res = [];
 			//1.遍历取出所有指定元素
-			T.each(Ttarget,function(key, value){
+			T.each(Ttarget, function(key, value) {
 				let parent = value.parentNode;
 				//2.遍历取出所有元素
-				Tthis.each(function(k,v){
+				Tthis.each(function(k, v) {
 					//3.判断当前时候是第0个指定的元素
-					if (key === 0) {
+					if(key === 0) {
 						//直接添加
-						parent.insertBefore(v,value.nextSibling);
+						parent.insertBefore(v, value.nextSibling);
 						res.push(v);
-					} else{
+					} else {
 						//先拷贝再添加
 						let temp = v.cloneNode(true);
-						parent.insertBefore(temp,value.nextSibling);
+						parent.insertBefore(temp, value.nextSibling);
 						res.push(temp);
 					}
 				})
@@ -413,42 +426,42 @@
 			//返回所有添加的元素
 			return T(res);
 		},
-		before: function(sele){
-			if (T.isString(sele)) {
-				T.each(this,function(key, value){
+		before: function(sele) {
+			if(T.isString(sele)) {
+				T.each(this, function(key, value) {
 					this.innerHTML = sele + this.innerHTML;
 				})
-			} else{
+			} else {
 				T(sele).insertBefore(this);
 			}
 			return this;
 		},
-		after: function(sele){
-			if (T.isString(sele)) {
-				T.each(this,function(key, value){
+		after: function(sele) {
+			if(T.isString(sele)) {
+				T.each(this, function(key, value) {
 					this.innerHTML += sele;
 				})
-			} else{
+			} else {
 				T(sele).insertAfter(this);
 			}
 			return this;
 		},
-		replaceAll: function(sele){
+		replaceAll: function(sele) {
 			T(this).insertBefore(T(sele));
 			T(sele).remove();
 			return this;
 		},
-		replaceWith: function(sele){
+		replaceWith: function(sele) {
 			T(sele).insertBefore(this);
 			T(this).remove();
 			return this;
 		},
 		siblings: function() {
-			console.log(this)
-			this[0].remove();
-			console.log(this.parentNode)
-			let children = T(this[0].parentNode).chidren();
-			console.log(children)
+			let childs = T(this[0].parentNode).children(),
+				children = T(childs).toArray(),
+				index = Array.prototype.indexOf.call(children, this[0]); //获取当前元素的索引
+			children.splice(index, 1);
+			return T(children);
 		}
 	});
 
