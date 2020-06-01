@@ -1,47 +1,52 @@
-;
+; // 避免前面有谁没有加; 对当前代码块造成影响
 (function(window, undefined) {
-	var T = tyt = function(selector) {
-		return new T.prototype.init(selector);
+	//定义函数
+	var $ = tyt = function(selector) {
+		return new $.prototype.init(selector);
 	}
-	T.prototype = {
-		constructor: T,
+	// 重新定义函数原型方法
+	$.prototype = {
+		// 定义原型上的构造函数为原函数T
+		constructor: $,
+		// 定义原型上的init()方法
 		init: function(selector) {
 			/*
-			  1.传入'' null undefined NaN 0 false,返回空的T对象
+			 * 参数处理规则
+			  1.传入'' null undefined NaN 0 false,返回空的init实例对象
 			  2.传入字符串：
-			  	代码片段： 会将创建好的DOM元素存储到T对象中返回 <a></a>
-			  	选择器：  会将找到的所有元素存储到T对象中返回
+			  	代码片段： 会将创建好的DOM元素存储到init实例对象中返回 <a></a>
+			  	选择器：  会将找到的所有元素存储到init实例对象中返回
 			  3.数组
-			  	会将数组中存储的元素依次存储到T对象中返回
+			  	会将数组中存储的元素依次存储到init实例对象中返回
 			  4.除上述类型外的其他
-			    会将传入的数据存储在T对象中返回
+			    	会将传入的数据存储在init实例对象中返回
 			 */
-			//0.去除字符串两端空格
-			selector = T.trim(selector);
-			//  1.传入'' null undefined NaN 0 false,返回空的T对象
+			
+			// 对传入的参数进行处理，去除字符串两端空格
+			selector = $.trim(selector);
+			// 传入'' null undefined NaN 0 false,返回空的T对象
 			if(!selector) {
 				return this;
 			}
-			// 2.传入字符串：
-			else if(T.isString(selector)) {
+			// 传入字符串：
+			else if($.isString(selector)) {
 				// 2.1 判断是否是代码片段
-				if(T.isHTML(selector)) {
+				if($.isHTML(selector)) {
 					//1.根据代码片段创建所有元素
 					let temp = document.createElement("div");
 					temp.innerHTML = selector;
 					[].push.apply(this, temp.children);
 				} else {
-					// 选择器
 					let res = document.querySelectorAll(selector);
 					[].push.apply(this, res);
 				}
 			}
 			// 3.传入函数
-			else if(T.isFunction(selector)) {
-				T.ready(selector);
+			else if($.isFunction(selector)) {
+				$.ready(selector);
 			}
 			// 4. 数组(真数组和伪数组)
-			else if(T.isArray(selector)) {
+			else if($.isArray(selector)) {
 				//无论是真数组还是伪数组，都先转为真数组，在转为伪数组
 				let arr = [].slice.call(selector);
 				[].push.apply(this, arr);
@@ -72,7 +77,7 @@
 		 * 12.each: 遍历实例，把遍历到的数据传给回调使用
 		 * 13.map: 遍历实例，把遍历到的数据传给回调使用,然后把回调的返回值收集起来组成一个新数组返回
 		 */
-		T: '1.1.0',
+		version: '1.1.0',
 		selector: '',
 		length: 0,
 		//[].push找到数组的push方法
@@ -96,6 +101,7 @@
 			}
 			return res;
 		},
+		//这里存在的意义是供eq()调用
 		get: function(num) {
 			if(arguments.length === 0) {
 				return this.toArray();
@@ -107,9 +113,9 @@
 		},
 		eq: function(num) {
 			if(arguments.length === 0) {
-				return new T();
+				return new $();
 			} else {
-				return T(this.get(num));
+				return $(this.get(num));
 			}
 		},
 		first: function() {
@@ -119,19 +125,19 @@
 			return this.eq(-1);
 		},
 		each: function(fn) { // fn => 回调函数
-			return T.each(this, fn);
+			return $.each(this, fn);
 		}
 	}
 
-	/*静态方法*/
-	T.extend = T.prototype.extend = function(obj) {
+	// 给函数$添加一个静态extend()方法，然猴让原型上的extend()方法指针指向这个静态指针地址
+	$.extend = $.prototype.extend = function(obj) {
 		for(let key in obj) {
 			this[key] = obj[key];
 		}
 	}
 
-	// 工具方法
-	T.extend({
+	// 编写具体的属性方法
+	$.extend({
 		isString: function(str) {
 			return typeof str === 'string';
 		},
@@ -139,7 +145,7 @@
 			return str.charAt(0) == '<' && str.charAt(str.length - 1) == '>' && str.length >= 3;
 		},
 		trim: function(str) {
-			if(!T.isString(str)) {
+			if(!$.isString(str)) {
 				return str;
 			}
 			if(str.trim) {
@@ -156,7 +162,7 @@
 			return sele === window;
 		},
 		isArray: function(sele) {
-			if(T.isObject(sele) && !T.isWindow() && 'length' in sele) {
+			if($.isObject(sele) && !$.isWindow() && 'length' in sele) {
 				return true;
 			}
 			return false;
@@ -178,20 +184,19 @@
 				})
 			}
 		},
+		//对一个数组或者对象进行遍历，并执行fn()这个函数
 		each: function(obj, fn) { // fn => 回调函数
 			//1.判断是否是数组
-			if(T.isArray(obj)) {
+			if($.isArray(obj)) {
 				for(let i = 0; i < obj.length; i++) {
-					//					let res = fn(i,obj[i]);
-					// 改变this指向为value
-					let res = fn.call(obj[i], i, obj[i]);
+					let res = fn.call(obj[i], i, obj[i]); // 这里更改this指向为value
 					if(res === true) {
 						continue;
 					} else if(res === false) {
 						break;
 					}
 				}
-			} else if(T.isObject(obj)) {
+			} else if($.isObject(obj)) {
 				for(let key in obj) {
 					let res = fn.call(obj[key], key, obj[key]);
 					if(res === true) {
@@ -203,16 +208,17 @@
 			}
 			return obj;
 		},
+		// 对一个数组或者对象进行遍历，并执行fn()这个函数，返回执行这个函数后的新数组
 		map: function(obj, fn) {
 			let res = [];
-			if(T.isArray(obj)) {
+			if($.isArray(obj)) {
 				for(let i = 0; i < obj.length; i++) {
 					let temp = fn(obj[i], i);
 					if(temp) {
 						res.push(temp);
 					}
 				}
-			} else if(T.isObject(obj)) {
+			} else if($.isObject(obj)) {
 				for(let key in obj) {
 					let temp = fn(obj[key], key);
 					if(temp) {
@@ -226,18 +232,18 @@
 	});
 
 	//DOM操作相关方法
-	T.prototype.extend({
+	$.prototype.extend({
 		children: function() {
 			let res = [];
-			T(this).each(function(k, v) {
+			$(this).each(function(k, v) {
 				let children = v.childNodes;
-				T(children).each(function(key, value) {
+				$(children).each(function(key, value) {
 					if(value.nodeType === 1) {
 						res.push(value);
 					}
 				});
 			})
-			return T(res);
+			return $(res);
 		},
 		empty: function() {
 			//1.遍历找到的所有元素
@@ -246,6 +252,8 @@
 			})
 			return this;
 		},
+		//从DOM中删除所有匹配的元素
+		// 没有参数，则删除当前所有，右参数，则删除当前对象中具有参数特性的数据
 		remove: function(sele) {
 			if(arguments.length === 0) {
 				//1.遍历找到的所有元素
@@ -257,7 +265,7 @@
 			} else {
 				let Tthis = this;
 				//1.根据传入的选择器，找到对应的元素
-				T(sele).each(function(key, value) {
+				$(sele).each(function(key, value) {
 					//2.遍历找到的元素，获取对应的类型
 					let type = value.tagName;
 					//3.遍历指定的元素
@@ -300,12 +308,12 @@
 		},
 		// 将指定元素添加到目标元素内的最后面
 		appendTo: function(sele) {
-			//统一的将传入的数据转为T对象
-			let Ttarget = T(sele),
+			//统一的将传入的数据转为init()实例对象
+			let Ttarget = $(sele),
 				Tthis = this,
 				res = [];
 			//1.遍历取出所有指定元素
-			T.each(Ttarget, function(key, value) {
+			$.each(Ttarget, function(key, value) {
 				//2.遍历取出所有元素
 				Tthis.each(function(k, v) {
 					//3.判断当前时候是第0个指定的元素
@@ -322,16 +330,16 @@
 				})
 			});
 			//返回所有添加的元素
-			return T(res);
+			return $(res);
 		},
 		// 将指定元素添加到目标元素内的最前面
 		prependTo: function(sele) {
 			//统一的将传入的数据转为T对象
-			let Ttarget = T(sele),
+			let Ttarget = $(sele),
 				Tthis = this,
 				res = [];
 			//1.遍历取出所有指定元素
-			T.each(Ttarget, function(key, value) {
+			$.each(Ttarget, function(key, value) {
 				//2.遍历取出所有元素
 				Tthis.each(function(k, v) {
 					//3.判断当前时候是第0个指定的元素
@@ -348,39 +356,39 @@
 				})
 			});
 			//返回所有添加的元素
-			return T(res);
+			return $(res);
 		},
 		//元素添加指定内容到最后面
 		append: function(sele) {
-			if(T.isString(sele)) {
-				T.each(this, function(key, value) {
+			if($.isString(sele)) {
+				$.each(this, function(key, value) {
 					this.innerHTML += sele;
 				})
 				//this[0].innerHTML += sele;
 			} else {
-				T(sele).appendTo(this);
+				$(sele).appendTo(this);
 			}
 			return this;
 		},
 		//元素添加指定内容到最前面
 		prepend: function(sele) {
-			if(T.isString(sele)) {
-				T.each(this, function(key, value) {
+			if($.isString(sele)) {
+				$.each(this, function(key, value) {
 					this.innerHTML = sele + this.innerHTML;
 				})
 			} else {
-				T(sele).prependTo(this);
+				$(sele).prependTo(this);
 			}
 			return this;
 		},
-		////元素添加指定内容到前面
+		//元素添加指定内容到前面
 		insertBefore: function(sele) {
 			//调用者.inserBefore(插入的元素，参考元素)
-			let Ttarget = T(sele),
+			let Ttarget = $(sele),
 				Tthis = this,
 				res = [];
 			//1.遍历取出所有指定元素
-			T.each(Ttarget, function(key, value) {
+			$.each(Ttarget, function(key, value) {
 				let parent = value.parentNode;
 				//2.遍历取出所有元素
 				Tthis.each(function(k, v) {
@@ -398,15 +406,15 @@
 				})
 			});
 			//返回所有添加的元素
-			return T(res);
+			return $(res);
 		},
 		insertAfter: function(sele) {
 			//调用者.inserBefore(插入的元素，参考元素)
-			let Ttarget = T(sele),
+			let Ttarget = $(sele),
 				Tthis = this,
 				res = [];
 			//1.遍历取出所有指定元素
-			T.each(Ttarget, function(key, value) {
+			$.each(Ttarget, function(key, value) {
 				let parent = value.parentNode;
 				//2.遍历取出所有元素
 				Tthis.each(function(k, v) {
@@ -424,47 +432,47 @@
 				})
 			});
 			//返回所有添加的元素
-			return T(res);
+			return $(res);
 		},
 		before: function(sele) {
-			if(T.isString(sele)) {
-				T.each(this, function(key, value) {
+			if($.isString(sele)) {
+				$.each(this, function(key, value) {
 					this.innerHTML = sele + this.innerHTML;
 				})
 			} else {
-				T(sele).insertBefore(this);
+				$(sele).insertBefore(this);
 			}
 			return this;
 		},
 		after: function(sele) {
-			if(T.isString(sele)) {
-				T.each(this, function(key, value) {
+			if($.isString(sele)) {
+				$.each(this, function(key, value) {
 					this.innerHTML += sele;
 				})
 			} else {
-				T(sele).insertAfter(this);
+				$(sele).insertAfter(this);
 			}
 			return this;
 		},
 		replaceAll: function(sele) {
-			T(this).insertBefore(T(sele));
-			T(sele).remove();
+			$(this).insertBefore($(sele));
+			$(sele).remove();
 			return this;
 		},
 		replaceWith: function(sele) {
-			T(sele).insertBefore(this);
-			T(this).remove();
+			$(sele).insertBefore(this);
+			$(this).remove();
 			return this;
 		},
 		siblings: function() {
-			let childs = T(this[0].parentNode).children(),
-				children = T(childs).toArray(),
+			let childs = $(this[0].parentNode).children(),
+				children = $(childs).toArray(),
 				index = Array.prototype.indexOf.call(children, this[0]); //获取当前元素的索引
 			children.splice(index, 1);
-			return T(children);
+			return $(children);
 		}
 	});
 
-	T.prototype.init.prototype = T.prototype;
-	window.T = T;
+	$.prototype.init.prototype = $.prototype;
+	window.$ = $;
 })(window);
